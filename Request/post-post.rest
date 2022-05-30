@@ -1,0 +1,7 @@
+POST http://127.0.0.1:8000/post
+Content-Type: application/json
+
+{
+  "title" : "primer post",
+  "content" : "mucho bla bla bla"
+}
