@@ -21,6 +21,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.1",
-    "http": "^0.0.1-security"
+    "http": "^0.0.1-security",
+    "uuid": "^8.3.2"
   }
 }

@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(middleware.consoleData);
 
 app.use("/keepalive", keepaliveController);
-app.use("/entry", entryController);
+app.use("/objeto", entryController);
 
 app.use(middleware.unknownEndpoint);
 module.exports = app;
