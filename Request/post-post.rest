@@ -1,5 +1,5 @@
 POST http://127.0.0.1:8000/objeto
-Content-Type: application/json
+Content-Type: application/json 
 
 {
   "title" : "primer post",
