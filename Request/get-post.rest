@@ -4,4 +4,7 @@ GET http://localhost:8000/objeto
 GET http://localhost:8000/objeto/2365108b-7ed3-4ea2-a931-f46769e30417
 
 ###
-DELETE http://localhost:8000/objeto/3
+DELETE http://localhost:8000/objeto/2
+
+###
+GET http://localhost:8000/objeto/2
