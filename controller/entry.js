@@ -5,8 +5,8 @@ const router = require("express").Router();
 let dao  = require("../dataccess/entry");
 
 /* Obtener todo */
-router.get("/", (req, res) => {
-  res.status(200).json(dao.getAll());
+router.get("/", (req, res) => { 
+  res.status(200).json(dao.getAll(req.query));
 });
 
 /* Obtener uno especifico */
