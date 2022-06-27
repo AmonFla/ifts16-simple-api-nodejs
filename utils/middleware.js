@@ -34,6 +34,7 @@ const validarUserLogin = (req, resp, next) => {
   if( !decodeToken.id){
     return resp.status(401).json({error: 'token invalid'})
   }
+  
   req.user = decodeToken
   next()
 }
