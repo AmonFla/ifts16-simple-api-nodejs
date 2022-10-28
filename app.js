@@ -13,9 +13,11 @@ app.use(express.json());
 app.use(middleware.consoleData);
 app.use(middleware.processToken);
 
+
+app.use("/login", loginController); 
+
 app.use("/keepalive", keepaliveController);
-app.use("/objeto", entryController);
-app.use("/login", loginController);
+app.use("/objeto", entryController); 
 
 app.use(middleware.unknownEndpoint);
 module.exports = app;

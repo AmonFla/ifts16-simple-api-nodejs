@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://127.0.0.1:8000/objeto
+POST http://127.0.0.1:8000/objeto/
 Content-Type: application/json
 Authorization: Bearer {{ login.response.body.token }}
 
