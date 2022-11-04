@@ -10,21 +10,10 @@ DELETE http://localhost:8000/objeto/3
 GET http://localhost:8000/objeto/2
 
 ###
-GET http://localhost:8000/objeto?title=Java
-###
-GET http://localhost:8000/objeto?content=jdbc
-###
-GET http://localhost:8000/objeto?title=Java&content=jdbc
-
+GET http://localhost:8000/objeto?categoria_id=2
 ###
 GET http://localhost:8000/objeto
-
 ###
-GET http://localhost:8000/objeto?multitle=Java,PHP
-
+GET http://localhost:8000/objeto?title=primer post4
 ###
-GET http://localhost:8000/objeto?search=java
-
-###
-GET http://localhost:8000/objeto?multisearch=java,PHP
-
+GET http://localhost:8000/objeto?title=primer post4&categoria_id=2

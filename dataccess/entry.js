@@ -3,11 +3,30 @@ const { Post, Categoria } = require('../models/')
 
 
 const getAll = async (filter) => { 
-  const datos = await Post.findAll({
+  let options = {
+    attributes: ['id', 'title'], // select 
     include: [
       {model: Categoria, required: false}
-  ]
-}) 
+    ]
+  }
+
+  if (filter.categoria_id)
+    options = {
+      ...options, where: {
+        ...options.where,
+        categoriaId: filter.categoria_id
+      }
+    }
+  
+    if (filter.title)
+    options = {
+      ...options, where: {
+        ...options.where,
+        title: filter.title
+      }
+    }
+  
+  const datos = await Post.findAll(options) 
   return datos
 };
 
