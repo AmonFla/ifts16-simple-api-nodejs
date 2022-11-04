@@ -5,14 +5,14 @@ const router = require("express").Router();
 let dao  = require("../dataccess/entry");
 
 /* Obtener todo */
-router.get("/", (req, res) => { 
-  res.status(200).json(dao.getAll(req.query));
+router.get("/", async (req, res) => { 
+  res.status(200).json(await dao.getAll(req.query));
 });
 
 /* Obtener uno especifico */
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
   const id = req.params.id;
-  const data = dao.getOne(id);
+  const data = await dao.getOne(id);
 
   if (data) {
     res.status(200).json(data);
@@ -33,10 +33,10 @@ router.post("/", (req, res) => {
 */
 
 // POST funcionando con usuario logueado
-router.post("/", middleware.validarUserLogin, (req, res) => {
+router.post("/", middleware.validarUserLogin, async (req, res) => {
   
   const body = { ...req.body, user: req.user };
-  const data = dao.save(body);
+  const data = await dao.save(body); 
   res.status(200).json(data);
 });
 
@@ -47,21 +47,19 @@ router.post("/", middleware.validarUserLogin, (req, res) => {
   res.sendStatus(201);
 });*/
 
-router.delete("/:id", (req, res) => {
-  const id = req.params.id;  
+router.delete("/:id", async (req, res) => {
+  const id = req.params.id;
 
-  if (dao.borrar(id)) { 
-    res.sendStatus(202);
-  } else {
-    res.sendStatus(404);
-  }
-});
+  await dao.borrar(id)
+  res.sendStatus(202)
+}
+);
 
 /* Modificar un elemento */
-router.put("/:id", (req, res) => {
+router.put("/:id", async (req, res) => {
   const id = req.params.id;
  
-  if (dao.update(id, req.body) ) { 
+  if (await dao.update(id, req.body) ) { 
     res.sendStatus(202);
   } else {
     res.sendStatus(404);

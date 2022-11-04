@@ -13,6 +13,22 @@ Content-Type: application/json
 Authorization: Bearer {{ login.response.body.token }}
 
 {
-  "title" : "primer post",
-  "content" : "mucho bla bla bla"
+  "title" : "primer post2",
+  "content" : "mucho bla bla bla2",
+  "categoria": { 
+    "nombre": "crea nueva"
+  }
+}
+
+###
+PUT http://127.0.0.1:8000/objeto/5
+Content-Type: application/json
+Authorization: Bearer {{ login.response.body.token }}
+
+{
+  "title" : "primer post4",
+  "content" : "mucho bla bla bla4",
+  "categoria": {
+    "id": 2
+  }
 }

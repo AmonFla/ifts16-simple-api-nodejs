@@ -1,82 +1,63 @@
-const { v4: uuidv4 } = require("uuid");
-let Entry = [
-  {
-    id: 1,
-    title: "hola",
-    content: "jdbc es lo más",
-  },
-  {
-    id: 2,
-    title: "PHP",
-    content: "aguante laravel",
-  },
-  {
-    id: 3,
-    title: "java",
-    content: "hola xava",
-  },
-  {
-    id: 4,
-    title: "Python",
-    content: "hola python",
-  },
-];
+const { Post, Categoria } = require('../models/')
+   
 
-const getAll = (filter) => { 
-  let filtrado = Entry;
-  
-  if(filter.title){
-    filtrado = filtrado.filter(e => e.title === filter.title)
-  }
 
-  if(filter.content){
-    filtrado = filtrado.filter (e => e.content.includes(filter.content))
-  }
-
-  if(filter.multitle){
-    filtrado = filtrado.filter(e => filter.multitle.split(',').includes(e.title))
-  }
-
-  if(filter.search){
-    filtrado = filtrado.filter(e => e.title.includes(filter.search) || e.content.includes(filter.search))
-  }
-
-  if(filter.multisearch){
-    const palabrasABuscar = filter.multisearch.split(',');
-    filtrado = filtrado.filter(entry => { 
-      const filtro = palabrasABuscar.filter(palabra => entry.title.includes(palabra) || entry.content.includes(palabra))
-      return filtro.length > 0      
-    })
-  }
-  
-
-  return filtrado
+const getAll = async (filter) => { 
+  const datos = await Post.findAll({
+    include: [
+      {model: Categoria, required: false}
+  ]
+}) 
+  return datos
 };
 
-const getOne = (id) => { return Entry.find((registro) => registro.id == id);}
+const getOne = async (id) => {
+  return await Post.findByPk(id, {
+    include: [
+      {model: Categoria, required: false}
+  ]
+});}
 
-const save = (body) => {
-  const data = { ...body, id: uuidv4() }
-  Entry.push(data);
-  return data
-}
 
-const borrar = (id) => {
-  const index = Entry.findIndex((registro) => registro.id == id);
-  if (index > 0) {
-    Entry.splice(index, 1);
-    return true
+const save = async (body) => {
+  const data = { ...body}
+  const post = await Post.create(data);
+  if (body.categoria) { 
+    let categoria = {}
+    if (body.categoria.id) {
+      categoria = await Categoria.findByPk(body.categoria.id)
+    } else { 
+      categoria = await Categoria.create(body.categoria)
+    }
+    post.categoriaId = categoria.id
+    await post.save()
   }
-  return false
+  return post
 }
 
-const update = (id) => { 
-  const index = Entry.findIndex((registro) => registro.id == id);
-  if (index >= 0) {
-    Entry[index] = req.body;
-    return true
-  } 
-  return false
+const borrar = async (id) => {
+  await Post.destroy({
+    where: {
+      id
+    }
+  }) 
+}
+
+const update = async (id, body) => { 
+  const data = await getOne(id)
+  data.title = body.title
+  data.content = body.content
+  if (body.categoria) { 
+    let categoria = {}
+    if (body.categoria.id) {
+      categoria = await Categoria.findByPk(body.categoria.id)
+    } else { 
+      categoria = await Categoria.create(body.categoria)
+    }
+    data.categoriaId = categoria.id 
+  }
+  await data.save()
+  return data
 }
 
 module.exports = { getAll, getOne, save, borrar, update};
